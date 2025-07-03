@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://p00vqrfhvgcd"]
+
+[ext_resource type="Script" uid="uid://bqovalshwto2y" path="res://scripts/network_manager.gd" id="1_network_manager"]
+[ext_resource type="PackedScene" uid="uid://csw03co2qqpai" path="res://scenes/network_ui.tscn" id="1_network_ui"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
+
+[node name="Game" type="Node2D"]
+
+[node name="NetworkManager" type="Node" parent="."]
+script = ExtResource("1_network_manager")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(577, 325)
+
+[node name="NetworkUI" parent="Camera2D" instance=ExtResource("1_network_ui")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(200, 151)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_uwrxv")
