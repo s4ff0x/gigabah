@@ -14,6 +14,7 @@ const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 
 func _ready() -> void:
 	if OS.has_feature("dedicated_server"):
+		Engine.max_fps = 60
 		start_server()
 	elif OS.has_feature("client"):
 		start_client(ADDRESS)
