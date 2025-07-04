@@ -1,9 +1,9 @@
 extends Node
 
 const PORT: int = 25445
-const ADDRESS: String = "127.0.0.1"
 
 var peer: ENetMultiplayerPeer
+const ADDRESS: String = "51.250.122.114"
 
 ## Signals
 signal player_joined(peer_id: int)
@@ -15,6 +15,10 @@ const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 func _ready() -> void:
 	if OS.has_feature("dedicated_server"):
 		start_server()
+	elif OS.has_feature("client"):
+		start_client(ADDRESS)
+	else:
+		start_client("127.0.0.1")
 
 ## Start as server
 func start_server() -> void:
