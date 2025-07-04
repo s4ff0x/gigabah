@@ -31,7 +31,7 @@ func start_client(address: String) -> void:
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
-	print("Connecting to %s:%d..." % [ADDRESS, PORT])
+	print("Connecting to %s:%d..." % [address, PORT])
 
 ## Player connection handlers
 func _on_peer_connected(id: int) -> void:
