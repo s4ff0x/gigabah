@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://6nglei4yml31"]
+
+[ext_resource type="PackedScene" uid="uid://cnjt2h24nq3xp" path="res://scenes/network_ui.tscn" id="1_45a1r"]
+[ext_resource type="Script" uid="uid://f0ylqu4wka2x" path="res://scripts/multiplayer_spawner.gd" id="2_74d6c"]
+[ext_resource type="PackedScene" uid="uid://sulovrdd1dhy" path="res://scenes/player.tscn" id="3_hhnvu"]
+[ext_resource type="Texture2D" uid="uid://clesdfb83mbew" path="res://icon.svg" id="4_hhnvu"]
+
+[node name="Index" type="Node2D"]
+
+[node name="NetworkUI" parent="." instance=ExtResource("1_45a1r")]
+offset_left = 638.0
+offset_top = 347.0
+offset_right = 638.0
+offset_bottom = 347.0
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://sulovrdd1dhy")
+spawn_path = NodePath("..")
+script = ExtResource("2_74d6c")
+player_scene = ExtResource("3_hhnvu")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(372, 501)
+texture = ExtResource("4_hhnvu")
