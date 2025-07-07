@@ -12,7 +12,9 @@ func spawn_player(id: int) -> void:
 	if !multiplayer.is_server(): return
 	var player: Node = player_scene.instantiate()
 	player.name = str(id)
-	player.position = Vector2(randf_range(100, 500), randf_range(100, 500))
+	player.position.x = randf_range(-5, 5)
+	player.position.y = 0
+	player.position.z = randf_range(-5, 5)
 	get_node(spawn_path).call_deferred("add_child", player)
 
 func despawn_player(id: int) -> void:

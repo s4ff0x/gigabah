@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddysjp340j8lu"]
+
+[ext_resource type="Script" uid="uid://yhpcy6v4fk8m" path="res://scripts/player3d.gd" id="1_reoop"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_52vux"]
+albedo_color = Color(0.931964, 0.735031, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_52vux"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aoiyr"]
+radius = 0.492748
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2djwe"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:move_direction")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+
+[node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+motion_mode = 1
+script = ExtResource("1_reoop")
+camera = NodePath("Camera3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = SubResource("StandardMaterial3D_52vux")
+gi_mode = 2
+mesh = SubResource("CapsuleMesh_52vux")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_aoiyr")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.1
+delta_interval = 0.02
+replication_config = SubResource("SceneReplicationConfig_2djwe")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.927184, 0.374607, 0, -0.374607, 0.927184, 0, 3.32, 4.155)
+size = 2.905
+near = 0.002

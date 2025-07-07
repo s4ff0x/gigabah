@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="godessa"
-run/main_scene="uid://6nglei4yml31"
+run/main_scene="uid://bde2flq2egpcv"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -27,6 +27,10 @@ gdscript/warnings/inferred_declaration=1
 [display]
 
 window/size/always_on_top=true
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
 
 [rendering]
 
