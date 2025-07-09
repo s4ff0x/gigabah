@@ -11,7 +11,7 @@ var _pending_input: Vector2 = Vector2.ZERO
 @export var interpolation_speed: float = 25.0
 var predicted_position: Vector3 = Vector3.ZERO
 var last_input: Vector2 = Vector2.ZERO
-const RECONCILE_THRESHOLD: float = 2.0
+const RECONCILE_THRESHOLD: float = 1.0
 
 func _enter_tree() -> void:
 	# Always set authority to server (ID 1)
@@ -35,16 +35,11 @@ func _physics_process(_delta: float) -> void:
 			rpc_id(1, "receive_input", input_vec)
 		last_input = input_vec
 		# Predict movement locally
-		_predict_movement(input_vec, _delta)
-		# Set position directly to prediction
-		# position = predicted_position
+		_predict_movement(input_vec)
+
 	# Only the server moves the player
 	if multiplayer.is_server():
-		move_direction = _pending_input
-		velocity.x = move_direction.x * speed
-		velocity.z = move_direction.y * speed
-		velocity.y = 0
-		move_and_slide()
+		_move_behaviour(_pending_input)
 		replicated_position = position
 
 func _process(delta: float) -> void:
@@ -59,18 +54,19 @@ func _process(delta: float) -> void:
 			# Only interpolate other clients
 			position = position.lerp(replicated_position, clamp(interpolation_speed * delta, 0, 1))
 
-func _predict_movement(input_vec: Vector2, delta: float) -> void:
-	# Predict local movement using the same logic as the server
-	var vel: Vector3 = Vector3.ZERO
-	vel.x = input_vec.x * speed
-	vel.z = input_vec.y * speed
-	velocity = vel
-	# No gravity for prediction (assume flat ground)
-	predicted_position += vel * delta
-	move_and_slide()
+func _predict_movement(input_vec: Vector2) -> void:
+	_move_behaviour(input_vec)
+	predicted_position = position
 
 @rpc("any_peer")
 func receive_input(input_vec: Vector2) -> void:
 	"""Called remotely by clients to send their input to the server."""
 	if multiplayer.is_server():
 		_pending_input = input_vec
+
+func _move_behaviour(input_vec: Vector2) -> void:
+	move_direction = input_vec
+	velocity.x = move_direction.x * speed
+	velocity.z = move_direction.y * speed
+	velocity.y = 0
+	move_and_slide()
