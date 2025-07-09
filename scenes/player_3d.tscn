@@ -42,6 +42,7 @@ delta_interval = 0.02
 replication_config = SubResource("SceneReplicationConfig_2djwe")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.927184, 0.374607, 0, -0.374607, 0.927184, 0, 3.32, 4.155)
-size = 2.905
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 6.40873, 4.73637)
+projection = 1
+size = 9.572
 near = 0.002

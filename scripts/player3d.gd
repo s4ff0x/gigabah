@@ -13,7 +13,7 @@ func _enter_tree() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if is_multiplayer_authority():
-		move_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		move_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	
 	velocity.x = move_direction.x * speed
 	velocity.z = move_direction.y * speed

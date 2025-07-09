@@ -24,6 +24,7 @@ light_energy = 0.354
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.617228, -0.453674, 0.642814, -0.159227, 0.728081, 0.666742, -0.770504, -0.513885, 0.377155, 0, 5.77813, 0)
 light_energy = 0.839
+shadow_enabled = true
 sky_mode = 1
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
