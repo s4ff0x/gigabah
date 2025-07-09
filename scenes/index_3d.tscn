@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bde2flq2egpcv"]
+[gd_scene load_steps=5 format=3 uid="uid://bde2flq2egpcv"]
 
 [ext_resource type="Script" uid="uid://f0ylqu4wka2x" path="res://scripts/multiplayer_spawner.gd" id="1_ljtd4"]
 [ext_resource type="PackedScene" uid="uid://ddysjp340j8lu" path="res://scenes/player_3d.tscn" id="2_qt2py"]
+[ext_resource type="PackedScene" uid="uid://cu43xh2jit3io" path="res://scenes/aoe.tscn" id="3_4bt8n"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qt2py"]
 
@@ -31,3 +32,6 @@ sky_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.77813, 0)
 shadow_enabled = true
 omni_range = 16.9915
+
+[node name="AoE" parent="." instance=ExtResource("3_4bt8n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)

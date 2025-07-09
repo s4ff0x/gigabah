@@ -12,7 +12,7 @@ var _pending_input: Vector2 = Vector2.ZERO
 @export var interpolation_speed: float = 25.0
 var predicted_position: Vector3 = Vector3.ZERO
 var last_input: Vector2 = Vector2.ZERO
-const RECONCILE_THRESHOLD: float = 1.0
+const RECONCILE_THRESHOLD: float = 0.5
 
 # Advanced reconciliation
 var input_sequence: int = 0
@@ -96,6 +96,8 @@ func _predict_movement(input_vec: Vector2) -> void:
 
 # Move logic, shared by server and prediction
 func _move_behaviour(input_vec: Vector2) -> void:
+	if input_vec.length() > 0:
+		input_vec = input_vec.normalized()
 	move_direction = input_vec
 	velocity.x = move_direction.x * speed
 	velocity.z = move_direction.y * speed
