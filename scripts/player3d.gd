@@ -8,7 +8,7 @@ class_name Player3D
 @export var replicated_position: Vector3 = Vector3.ZERO
 
 var _pending_input: Vector2 = Vector2.ZERO
-@export var interpolation_speed: float = 10.0
+@export var interpolation_speed: float = 16.0
 
 func _enter_tree() -> void:
 	# Always set authority to server (ID 1)
@@ -27,7 +27,7 @@ func _physics_process(_delta: float) -> void:
 		# Client: send input to server
 		var input_vec: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 		if input_vec != move_direction:
-			rpc_id(1, "receive_input", input_vec)
+			receive_input.rpc_id(1, input_vec)
 	# Only the server moves the player
 	if multiplayer.is_server():
 		move_direction = _pending_input

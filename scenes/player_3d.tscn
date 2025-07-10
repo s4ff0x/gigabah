@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://yhpcy6v4fk8m" path="res://scripts/player3d.gd" id="1_reoop"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_52vux"]
-albedo_color = Color(0.931964, 0.735031, 0, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_52vux"]
 
@@ -25,7 +24,6 @@ axis_lock_angular_z = true
 motion_mode = 1
 script = ExtResource("1_reoop")
 camera = NodePath("Camera3D")
-interpolation_speed = 25.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -38,7 +36,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_aoiyr")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_interval = 0.1
+replication_interval = 0.05
 delta_interval = 0.02
 replication_config = SubResource("SceneReplicationConfig_2djwe")
 

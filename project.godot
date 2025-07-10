@@ -61,6 +61,7 @@ move_backward={
 
 [physics]
 
+common/physics_ticks_per_second=50
 3d/physics_engine="Jolt Physics"
 
 [rendering]

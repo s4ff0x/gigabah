@@ -13,10 +13,10 @@ tasks:
         sh: git log -n 1 --format=%h
     cmds:
       - 7z a .dist/windows-client.zip .dist/windows
-      - butler push .dist/windows-client.zip milanrodd/bevryust:windows-beta --userversion {{.GIT_COMMIT}}
       - docker build . --file Dockerfile --tag $REG/$IMAGE_URI:{{.GIT_COMMIT}}
       - docker push $REG/$IMAGE_URI:{{.GIT_COMMIT}}
       - docker tag $REG/$IMAGE_URI:{{.GIT_COMMIT}} $REG/$IMAGE_URI:latest
       - docker push $REG/$IMAGE_URI:latest
       - yc compute instance update-container $VM --container-image=$REG/$IMAGE_URI:{{.GIT_COMMIT}}
+      - butler push .dist/windows-client.zip milanrodd/bevryust:windows-beta --userversion {{.GIT_COMMIT}}
       - butler status milanrodd/bevryust:windows-beta
