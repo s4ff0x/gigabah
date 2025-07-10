@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://bde2flq2egpcv"]
 
-[ext_resource type="Script" uid="uid://f0ylqu4wka2x" path="res://scripts/multiplayer_spawner.gd" id="1_ljtd4"]
-[ext_resource type="PackedScene" uid="uid://bovykdv7vqfe7" path="res://scenes/aoe.tscn" id="3_4bt8n"]
-[ext_resource type="PackedScene" uid="uid://dmp8nc3aenbut" path="res://scenes/player.tscn" id="3_gj046"]
+[ext_resource type="Script" uid="uid://f0ylqu4wka2x" path="res://scripts/multiplayer_spawner.gd" id="2_hhnvu"]
+[ext_resource type="PackedScene" uid="uid://dmp8nc3aenbut" path="res://scenes/player.tscn" id="3_8s3bs"]
+[ext_resource type="PackedScene" uid="uid://cabfjhgqmmx3k" path="res://scenes/bullet.tscn" id="4_hhnvu"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qt2py"]
 
@@ -13,14 +13,11 @@ size = Vector3(1, 11, 21)
 
 [node name="Index3d" type="Node3D"]
 
-[node name="AoE" parent="." instance=ExtResource("3_4bt8n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
-
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://dmp8nc3aenbut")
 spawn_path = NodePath("..")
-script = ExtResource("1_ljtd4")
-player_scene = ExtResource("3_gj046")
+script = ExtResource("2_hhnvu")
+player_scene = ExtResource("3_8s3bs")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1.00225, 0, 0, 0, 1.00225, 0, 0, 0, 1.00225, 0, 0, 0)
@@ -76,3 +73,6 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 20, 0,
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/StaticBody3D2/StaticBody3D2/StaticBody3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 shape = SubResource("BoxShape3D_4bt8n")
+
+[node name="Bullet" parent="." instance=ExtResource("4_hhnvu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.00794, -0.0346527)

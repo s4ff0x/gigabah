@@ -1,5 +1,3 @@
-@tool
-
 extends MultiplayerSynchronizer
 class_name NetworkComponent
 

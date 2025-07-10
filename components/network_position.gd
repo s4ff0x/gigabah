@@ -40,4 +40,7 @@ func _physics_process(delta: float) -> void:
 		parent.move_and_slide()
 		server_position = parent.position
 	else:
-		parent.position = parent.position.lerp(server_position, clamp(interpolation_speed * delta, 0, 1))
+		if enable_interpolation:
+			parent.position = parent.position.lerp(server_position, clamp(interpolation_speed * delta, 0, 1))
+		else:
+			parent.position = server_position
