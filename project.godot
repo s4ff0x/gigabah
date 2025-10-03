@@ -24,10 +24,6 @@ NetworkManager="*res://scripts/network_manager.gd"
 gdscript/warnings/untyped_declaration=1
 gdscript/warnings/inferred_declaration=1
 
-[display]
-
-window/size/always_on_top=true
-
 [input]
 
 move_forward={
@@ -61,8 +57,10 @@ move_backward={
 
 [physics]
 
+common/physics_ticks_per_second=50
 3d/physics_engine="Jolt Physics"
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method.mobile="gl_compatibility"

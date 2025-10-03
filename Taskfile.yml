@@ -13,10 +13,23 @@ tasks:
         sh: git log -n 1 --format=%h
     cmds:
       - 7z a .dist/windows-client.zip .dist/windows
-      - butler push .dist/windows-client.zip milanrodd/bevryust:windows-beta --userversion {{.GIT_COMMIT}}
+      - 7z a .dist/linux-client.zip .dist/linux
       - docker build . --file Dockerfile --tag $REG/$IMAGE_URI:{{.GIT_COMMIT}}
       - docker push $REG/$IMAGE_URI:{{.GIT_COMMIT}}
       - docker tag $REG/$IMAGE_URI:{{.GIT_COMMIT}} $REG/$IMAGE_URI:latest
       - docker push $REG/$IMAGE_URI:latest
-      - yc compute instance update-container $VM --container-image=$REG/$IMAGE_URI:{{.GIT_COMMIT}}
+
+  deploy-push:
+    env:
+      IMAGE_URI: bevryust-server
+      REG: cr.yandex/crpqijg3j49fegqgp7aa
+      VM: epd976a2qt0id0tvld7o
+    vars:
+      GIT_COMMIT:
+        sh: git log -n 1 --format=%h
+    cmds:
+      - butler push .dist/windows-client.zip milanrodd/bevryust:windows-beta --userversion {{.GIT_COMMIT}}
       - butler status milanrodd/bevryust:windows-beta
+      - butler push .dist/linux-client.zip milanrodd/bevryust:linux-beta --userversion {{.GIT_COMMIT}}
+      - butler status milanrodd/bevryust:linux-beta
+      - yc compute instance update-container $VM --container-image=$REG/$IMAGE_URI:{{.GIT_COMMIT}}
