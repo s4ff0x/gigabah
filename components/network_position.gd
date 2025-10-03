@@ -1,32 +1,20 @@
-@tool
-
-extends NetworkComponent
+extends MultiplayerSynchronizer
 class_name NetworkPosition
 
-var parent: CharacterBody3D
+@onready var parent: CharacterBody3D = get_parent() as CharacterBody3D
 
 @export var server_position: Vector3 = Vector3.ZERO
 
 @export var enable_interpolation: bool = true
 @export var interpolation_speed: float = 18.0
 
-func _enter_tree() -> void:
-	pass
-	
-
-func _validate_property(_property: Dictionary) -> void:
-	replication_config.add_property(^":server_position")
-	replication_config.property_set_replication_mode(^":server_position", SceneReplicationConfig.REPLICATION_MODE_ALWAYS)
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	parent = get_parent() as CharacterBody3D
 	if parent != null:
 		server_position = parent.position
 	else:
 		printerr("NetworkPosition: Parent is null")
-	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

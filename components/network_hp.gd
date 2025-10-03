@@ -1,4 +1,4 @@
-extends NetworkComponent
+extends MultiplayerSynchronizer
 class_name NetworkHP
 
 @export var max_health: int = 100

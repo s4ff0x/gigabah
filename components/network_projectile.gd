@@ -1,10 +1,10 @@
-extends NetworkComponent
+extends MultiplayerSynchronizer
 class_name NetworkProjectile
 
 @export var speed: float = 1.0
 @export var move_direction: Vector3 = Vector3.FORWARD
 
-@export var parent: CharacterBody3D
+@onready var parent: CharacterBody3D = get_parent() as CharacterBody3D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
