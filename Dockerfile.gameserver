@@ -1,0 +1,104 @@
+# Multi-stage Dockerfile for Godot 4.5 Game Server
+# Stage 1: Export the game
+FROM ubuntu:22.04 AS builder
+
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    wget \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Godot headless for exporting
+WORKDIR /godot
+RUN wget https://github.com/godotengine/godot-builds/releases/download/4.5-stable/Godot_v4.5-stable_linux_headless.64.zip && \
+    unzip Godot_v4.5-stable_linux_headless.64.zip && \
+    rm Godot_v4.5-stable_linux_headless.64.zip && \
+    mv Godot_v4.5-stable_linux_headless.64 godot && \
+    chmod +x godot
+
+# Install export templates
+RUN wget https://github.com/godotengine/godot-builds/releases/download/4.5-stable/Godot_v4.5-stable_export_templates.tpz && \
+    mkdir -p /root/.local/share/godot/export_templates/4.5.stable && \
+    unzip Godot_v4.5-stable_export_templates.tpz && \
+    mv templates/* /root/.local/share/godot/export_templates/4.5.stable/ && \
+    rm -rf templates Godot_v4.5-stable_export_templates.tpz
+
+# Copy game source
+WORKDIR /game
+COPY . .
+
+# Create export preset if it doesn't exist
+RUN if [ ! -f export_presets.cfg ]; then \
+    echo '[preset.0]' > export_presets.cfg && \
+    echo '' >> export_presets.cfg && \
+    echo 'name="Linux/X11"' >> export_presets.cfg && \
+    echo 'platform="Linux/X11"' >> export_presets.cfg && \
+    echo 'runnable=true' >> export_presets.cfg && \
+    echo 'dedicated_server=true' >> export_presets.cfg && \
+    echo 'custom_features=""' >> export_presets.cfg && \
+    echo 'export_filter="all_resources"' >> export_presets.cfg && \
+    echo 'include_filter=""' >> export_presets.cfg && \
+    echo 'exclude_filter=""' >> export_presets.cfg && \
+    echo 'export_path="./build/game_server.x86_64"' >> export_presets.cfg && \
+    echo 'encryption_include_filters=""' >> export_presets.cfg && \
+    echo 'encryption_exclude_filters=""' >> export_presets.cfg && \
+    echo 'encrypt_pck=false' >> export_presets.cfg && \
+    echo 'encrypt_directory=false' >> export_presets.cfg && \
+    echo '' >> export_presets.cfg && \
+    echo '[preset.0.options]' >> export_presets.cfg && \
+    echo '' >> export_presets.cfg && \
+    echo 'custom_template/debug=""' >> export_presets.cfg && \
+    echo 'custom_template/release=""' >> export_presets.cfg && \
+    echo 'debug/export_console_wrapper=1' >> export_presets.cfg && \
+    echo 'binary_format/embed_pck=true' >> export_presets.cfg && \
+    echo 'texture_format/bptc=true' >> export_presets.cfg && \
+    echo 'texture_format/s3tc=true' >> export_presets.cfg && \
+    echo 'texture_format/etc=false' >> export_presets.cfg && \
+    echo 'texture_format/etc2=false' >> export_presets.cfg && \
+    echo 'binary_format/architecture="x86_64"' >> export_presets.cfg && \
+    echo 'ssh_remote_deploy/enabled=false' >> export_presets.cfg; \
+    fi
+
+# Export the game
+RUN mkdir -p build && \
+    /godot/godot --headless --export-release "Linux/X11" ./build/game_server.x86_64
+
+# Stage 2: Runtime
+FROM ubuntu:22.04
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    libgl1 \
+    libglu1-mesa \
+    libasound2 \
+    libpulse0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user for security
+RUN useradd -m -u 1000 gameserver && \
+    mkdir -p /game && \
+    chown -R gameserver:gameserver /game
+
+WORKDIR /game
+
+# Copy exported game from builder
+COPY --from=builder --chown=gameserver:gameserver /game/build/game_server.x86_64 ./game_server
+
+# Make executable
+RUN chmod +x game_server
+
+# Switch to non-root user
+USER gameserver
+
+# Expose default Godot server port (adjust as needed)
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD pidof game_server || exit 1
+
+# Run the game server
+CMD ["./game_server", "--headless"]
+

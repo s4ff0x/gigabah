@@ -1,0 +1,14 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile.gameserver"
+
+[deploy]
+startCommand = "./game_server --headless"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+
+[[deploy.healthcheck]]
+path = "/"
+timeout = 60
+interval = 30
+
