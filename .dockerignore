@@ -1,0 +1,49 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+docker-compose*.yml
+
+# Build artifacts
+.godot/
+build/
+builds/
+.dist/
+*.import
+.import/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (exclude from Docker build, but keep in repo)
+README.md
+RAILWAY_SETUP.md
+QUICK_START.md
+LICENSE
+docs/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Task files
+Taskfile.yml
+
+# Build containers folder
+build-containers/
+
+# Logs
+*.log
+
+# Test scripts
+test-docker.sh
