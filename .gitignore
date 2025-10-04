@@ -4,3 +4,4 @@
 assets/
 .dist/
 .vscode/
+.DS_Store
