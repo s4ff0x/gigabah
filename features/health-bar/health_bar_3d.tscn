@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cikxs0fl5lnxf"]
 
-[ext_resource type="Script" uid="uid://c8yad7k3m5n6p" path="res://scripts/hp/health_bar_3d.gd" id="1"]
+[ext_resource type="Script" uid="uid://c8yad7k3m5n6p" path="res://features/health-bar/health_bar_3d.gd" id="1"]
 
 [node name="HealthBar3D" type="Node3D"]
 script = ExtResource("1")

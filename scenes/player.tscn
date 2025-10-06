@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://coahpswxwi2pg" path="res://scripts/player.gd" id="1_qhqgy"]
 [ext_resource type="Material" uid="uid://cqnuidq68y17f" path="res://materials/player_material.tres" id="2_g2els"]
 [ext_resource type="Script" uid="uid://wwr4smb84bc0" path="res://components/network_position.gd" id="3_dqkch"]
-[ext_resource type="Script" uid="uid://bfhjfynop50wf" path="res://scripts/hp/network_hp.gd" id="4_dqkch"]
-[ext_resource type="PackedScene" uid="uid://cikxs0fl5lnxf" path="res://scenes/hp/health_bar_3d.tscn" id="5_health"]
+[ext_resource type="Script" uid="uid://bfhjfynop50wf" path="res://components/hp.gd" id="4_dqkch"]
+[ext_resource type="PackedScene" uid="uid://cikxs0fl5lnxf" path="res://features/health-bar/health_bar_3d.tscn" id="5_health"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g2els"]
 radius = 0.492748
@@ -18,6 +18,12 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dqkch"]
+properties/0/path = NodePath("NetworkHp:max_health")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("NetworkHp:current_health")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_qhqgy")
