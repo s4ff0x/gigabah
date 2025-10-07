@@ -1,9 +1,9 @@
 extends Node
 
-const PORT: int = 25445
 
 var peer: ENetMultiplayerPeer
-const ADDRESS: String = "51.250.122.114"
+const ADDRESS: String = "gigabuh.d.roddtech.ru"
+const PORT: int = 25445
 
 func _ready() -> void:
 	if OS.has_feature("dedicated_server"):
@@ -38,4 +38,4 @@ func _on_connection_failed() -> void:
 	print("Failed to connect to server.")
 
 func _on_server_disconnected() -> void:
-	print("Disconnected from server.") 
+	print("Disconnected from server.")
