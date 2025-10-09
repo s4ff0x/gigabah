@@ -42,7 +42,7 @@ func _ready() -> void:
 	# Initialize health
 	if current_health > max_health:
 		current_health = max_health
-	
+
 	# Defer finding health bar to ensure all nodes are ready
 	call_deferred("_find_health_bar")
 
@@ -97,30 +97,30 @@ func _find_health_bar() -> void:
 	if health_bar_path.is_empty():
 		push_warning("NetworkHP: No health bar path set")
 		return
-	
+
 	health_bar = get_node_or_null(health_bar_path)
-	
+
 	if not health_bar:
 		push_warning("NetworkHP: Health bar not found at path: ", health_bar_path)
 		if get_parent():
 			for child in get_parent().get_children():
 				print("  - ", child.name, " (", child.get_class(), ")")
 		return
-	
-	
+
+
 	# Connect signals first
 	if not health_changed.is_connected(_on_health_changed):
 		health_changed.connect(_on_health_changed)
-	
+
 	# Initialize health bar with current values
 	if health_bar.has_method("update_health"):
 		health_bar.update_health(current_health, max_health)
 	else:
 		push_warning("NetworkHP: Health bar doesn't have update_health method!")
-	
+
 	# Emit initial health state to trigger update via signal
 	health_changed.emit(current_health, max_health)
-	
+
 ## Update health bar when health changes
 func _on_health_changed(new_health: int, new_max_health: int) -> void:
 	if is_instance_valid(health_bar) and health_bar.has_method("update_health"):

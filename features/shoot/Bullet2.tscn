@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cg3rc7ybixj38"]
+
+[ext_resource type="Script" uid="uid://q8pm7q2o2whg" path="res://features/shoot/bullet.gd" id="1_yehc3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2rsom"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_yehc3"]
+
+[node name="Bullet2" type="Area3D"]
+script = ExtResource("1_yehc3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_2rsom")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+layers = 2
+mesh = SubResource("SphereMesh_yehc3")
