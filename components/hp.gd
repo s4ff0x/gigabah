@@ -24,16 +24,13 @@ class_name NetworkHP
 
 # Health bar display options
 @export_group("Health Bar")
-@export var health_bar_path: NodePath = NodePath("../HealthBar3D")
+@export var health_bar: Node = null
 
 # Signals
 signal health_changed(new_health: int, max_health: int)
 signal health_depleted()
 signal damage_taken(amount: int, new_health: int)
 signal healed(amount: int, new_health: int)
-
-# Health bar reference
-var health_bar: Node = null
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(1)
@@ -43,8 +40,8 @@ func _ready() -> void:
 	if current_health > max_health:
 		current_health = max_health
 
-	# Defer finding health bar to ensure all nodes are ready
-	call_deferred("_find_health_bar")
+	# Defer health bar setup to ensure all nodes are ready
+	call_deferred("_setup_health_bar")
 
 func _exit_tree() -> void:
 	# Disconnect from health bar (don't free it, it's part of the scene)
@@ -91,22 +88,11 @@ func get_health_percentage() -> float:
 func reset_health() -> void:
 	current_health = max_health
 
-## Find and configure health bar UI in scene
-func _find_health_bar() -> void:
-	# Try to get health bar from scene
-	if health_bar_path.is_empty():
-		push_warning("NetworkHP: No health bar path set")
+## Setup and configure health bar UI
+func _setup_health_bar() -> void:
+	# Check if health bar is set
+	if not is_instance_valid(health_bar):
 		return
-
-	health_bar = get_node_or_null(health_bar_path)
-
-	if not health_bar:
-		push_warning("NetworkHP: Health bar not found at path: ", health_bar_path)
-		if get_parent():
-			for child in get_parent().get_children():
-				print("  - ", child.name, " (", child.get_class(), ")")
-		return
-
 
 	# Connect signals first
 	if not health_changed.is_connected(_on_health_changed):

@@ -33,9 +33,6 @@ func _physics_process(delta: float) -> void:
 
 		receive_input.rpc_id(1, new_move_direction, new_jump_input)
 
-		if Input.is_action_just_pressed("shoot"):
-			shoot.rpc_id(1)
-
 	if multiplayer.is_server():
 		# Add the gravity.
 		if is_on_floor():
@@ -57,14 +54,7 @@ func receive_input(move_vec: Vector2, is_jumping: bool) -> void:
 		move_direction = move_vec
 		jump_input = is_jumping
 
-@rpc("any_peer", "call_local", "reliable")
-func shoot() -> void:
-	if !is_multiplayer_authority(): return
-	var bullet: Node = BULLET.instantiate()
-	bullet.position = global_position + Vector3(1, 0.9, 0)
-	get_node("/root/Index3d/SpawnTo").add_child(bullet, true)
-
-@rpc("any_peer", "call_local", "reliable")
+@rpc("any_peer", "call_local")
 func take_damage(amount: int) -> void:
 	if !is_multiplayer_authority(): return
 	$NetworkHp.take_damage(amount)
