@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bde2flq2egpcv"]
 
-[ext_resource type="Script" uid="uid://f0ylqu4wka2x" path="res://network/multiplayer_spawner.gd" id="2_hhnvu"]
+[ext_resource type="Script" uid="uid://f0ylqu4wka2x" path="res://features/player/multiplayer_spawner.gd" id="2_hhnvu"]
 [ext_resource type="PackedScene" uid="uid://dmp8nc3aenbut" path="res://features/player/player.tscn" id="3_8s3bs"]
 [ext_resource type="PackedScene" uid="uid://cabfjhgqmmx3k" path="res://features/shoot/bullet.tscn" id="4_hhnvu"]
 
